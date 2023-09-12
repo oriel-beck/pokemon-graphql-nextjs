@@ -7,7 +7,7 @@ export interface PokemonState extends Pokemon {
 }
 
 const initialState: Partial<PokemonState> = {
-    loading: false,
+    loading: true,
     error: false
 }
 
@@ -20,16 +20,12 @@ export const pokemon = createSlice({
             state = actions.payload;
             state.loading = false;
         },
-        startLoading: (state) => {
-            state.loading = true;
-        }
     }
 });
 
 export const {
     reset,
     setPokemon,
-    startLoading
 } = pokemon.actions;
 
 export default pokemon.reducer;

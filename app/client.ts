@@ -1,12 +1,12 @@
 // ApolloClient setup
-import { ApolloClient } from 'apollo-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { HttpLink } from 'apollo-link-http';
+import { ApolloClient } from "apollo-client";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { HttpLink } from "apollo-link-http";
 
 // Instantiate required constructor fields
 const cache = new InMemoryCache();
 const link = new HttpLink({
-  uri: 'https://graphqlpokemon.favware.tech/v7'
+  uri: "https://graphqlpokemon.favware.tech/v7"
 });
 
 export const client = new ApolloClient({
@@ -15,12 +15,12 @@ export const client = new ApolloClient({
   link: link,
 
   // Provide some optional constructor fields
-  name: 'graphql-pokemon-client',
-  version: '1.0',
+  name: "graphql-pokemon-client",
+  version: "1.0",
   queryDeduplication: false,
   defaultOptions: {
     watchQuery: {
-      fetchPolicy: 'cache-and-network'
+      fetchPolicy: "cache-and-network"
     }
   }
 });
