@@ -4,6 +4,8 @@ import { Box, Grid, Tab, Tabs, Typography } from "@mui/material";
 import { PokemonLoadingStatus, PokemonState } from "@redux/features/pokemon/pokemonSlice";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { ReactElement, useState } from "react";
+import { StarNo } from "@app/icons/star-no";
+import { Star } from "@app/icons/star";
 
 export default function Page() {
   const pokemon = useAppSelector((state) => state.pokemonReducer);
@@ -30,20 +32,36 @@ function PokemonStatusCase({ state }: { state: Partial<PokemonState> }): ReactEl
 }
 
 function PokemonDisplay({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
+  const [showShiny, setShowShiny] = useState(false);
+
+  function showSprite() {
+    if (!showShiny && !pokemon?.sprite) return '/pokemon-placeholder.png';
+    if (showShiny && !pokemon?.shinySprite) return '/pokemon-placeholder.png';
+    return showShiny ? pokemon.shinySprite : pokemon.sprite;
+  }
+
   return (
-    <Grid container spacing={{ xs: 1, md: 1, }} columns={{ xs: 4, md: 8}} className="mt-auto">
-      <Grid item xs={4} md={2} className="flex justify-center items-center bg-yellow-200" style={{
-        // paddingTop: '3%',
+    <Grid container spacing={{ xs: 1, md: 1, }} columns={{ xs: 4, md: 9 }} className="mt-auto">
+      <Grid item xs={4} md={3} className="flex justify-center items-center bg-yellow-200" style={{
+        paddingTop: '3%',
         flexDirection: 'column'
       }}>
+        {/* TODO: stick to right */}
+        <div className="flex flex-row p-4" style={{ width: '100' }}>
+          {showShiny ? <StarNo /> : <Star />}
+        </div>
         <Image
-          src={pokemon?.sprite ? pokemon.sprite : '/pokemon-placeholder.png'}
+          src={showSprite()}
           alt={pokemon.key}
-          height={500}
+          height={400}
           width={300}
+          style={{
+            maxHeight: '500px',
+            maxWidth: '300px'
+          }}
         />
         <div className="bg-blue-700 p-4 m-2 rounded-md flex text-white mt-7">
-          <Typography variant="h5"component="h3">
+          <Typography variant="h5" component="h3">
             {pokemon.key[0].toUpperCase() + pokemon.key.substring(1)}
           </Typography>
         </div>
@@ -58,7 +76,9 @@ function PokemonDisplay({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
             width={45}
             style={{
               marginInline: '5px',
-              marginBottom: '5px'
+              // TODO: adapt to mobile
+              marginBottom: '4rem',
+              maxHeight: '45px'
             }}
           />)}
         </div>
