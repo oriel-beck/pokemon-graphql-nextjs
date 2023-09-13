@@ -8,6 +8,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { useAppDispatch, useAppSelector } from "@app/redux/hooks";
 import { setSearch } from "@app/redux/features/searchSlice";
+import Link from "next/link";
 
 const pages = ["Pokemon", "Abilities", "Moves", "Items"];
 
@@ -18,16 +19,14 @@ export function Header() {
     const dispatch = useAppDispatch();
 
     const updateSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        dispatch(setSearch({
-            key: "pokemon",
-            value: event.currentTarget.value
-        }))
-    }
-
-    const startSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key != "Enter") return;
-        // TODO: search by route
-        return;
+        if (event.key === "Enter") {
+            // TOOD: search
+        } else {
+            dispatch(setSearch({
+                key: "pokemon",
+                value: event.currentTarget.value
+            }));
+        }
     }
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -87,13 +86,15 @@ export function Header() {
                     </Box>
                     <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                         {pages.map((page) => (
-                            <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: "white", display: "block" }}
-                            >
-                                {page}
-                            </Button>
+                            <Link key={page} href={page.toLowerCase()}>
+                                <Button
+                                    key={page}
+                                    onClick={handleCloseNavMenu}
+                                    sx={{ my: 2, color: "white", display: "block" }}
+                                >
+                                    {page}
+                                </Button>
+                            </Link>
                         ))}
                     </Box>
                     <Search>
@@ -103,8 +104,7 @@ export function Header() {
                         <StyledInputBase
                             // TODO: use the route to determine which key of searchState it's using
                             defaultValue={search.pokemon}
-                            onKeyDown={updateSearch}
-                            onKeyUp={startSearch}
+                            onKeyUp={updateSearch}
                             placeholder="Search…"
                             inputProps={{ "aria-label": "search" }}
                         />

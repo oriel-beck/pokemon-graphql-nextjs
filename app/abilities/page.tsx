@@ -3,13 +3,12 @@
 import { useAppDispatch, useAppSelector } from "@app/redux/hooks";
 
 export default function Page() {
-  const pokemon = useAppSelector((state) => state.pokemonReducer);
   const search = useAppSelector((state) => state.searchReducer);
   const dispatch = useAppDispatch();
   
     return (
       <div>
-       This is the pokemon page, you have searched: {search.pokemon}
+       This is the abilities page, you have searched: {search.abilities}
       </div>
     )
   }

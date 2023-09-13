@@ -2,16 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export interface SearchState {
     pokemon: string;
-    ability: string;
-    move: string;
-    item: string;
+    abilities: string;
+    moves: string;
+    items: string;
 }
 
 const initialState: SearchState = {
     pokemon: '',
-    ability: '',
-    move: '',
-    item: ''
+    abilities: '',
+    moves: '',
+    items: ''
 }
 
 export const search = createSlice({
