@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { default as pokemonReducer } from "@/app/redux/features/pokemonSlice";
+import { default as pokemonReducer } from "@redux/features/pokemonSlice";
+import { default as searchReducer } from "@redux/features/searchSlice";
 
 export const store = configureStore({
     reducer: {
-        pokemonReducer
+        pokemonReducer,
+        searchReducer
     },
     devTools: process.env.NODE_ENV !== "production",
 });
