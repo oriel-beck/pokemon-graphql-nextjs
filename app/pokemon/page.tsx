@@ -4,7 +4,6 @@ import { Box, Grid, Tab, Tabs, Typography } from "@mui/material";
 import { PokemonLoadingStatus, PokemonState } from "@redux/features/pokemon/pokemonSlice";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { ReactElement, useState } from "react";
-import { inspect } from "util";
 
 export default function Page() {
   const pokemon = useAppSelector((state) => state.pokemonReducer);
@@ -32,16 +31,39 @@ function PokemonStatusCase({ state }: { state: Partial<PokemonState> }): ReactEl
 
 function PokemonDisplay({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
   return (
-    <Grid container>
-      <Grid item xs={4} className="flex justify-center bg-yellow-200">
-          <Image
-            src={pokemon?.sprite ? pokemon.sprite : '/pokemon-placeholder.png'}
-            alt={pokemon.key}
-            height={500}
-            width={300}
-          ></Image>
+    <Grid container spacing={{ xs: 1, md: 1, }} columns={{ xs: 4, md: 8}} className="mt-auto">
+      <Grid item xs={4} md={2} className="flex justify-center items-center bg-yellow-200" style={{
+        // paddingTop: '3%',
+        flexDirection: 'column'
+      }}>
+        <Image
+          src={pokemon?.sprite ? pokemon.sprite : '/pokemon-placeholder.png'}
+          alt={pokemon.key}
+          height={500}
+          width={300}
+        />
+        <div className="bg-blue-700 p-4 m-2 rounded-md flex text-white mt-7">
+          <Typography variant="h5"component="h3">
+            {pokemon.key[0].toUpperCase() + pokemon.key.substring(1)}
+          </Typography>
+        </div>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'row'
+        }}>
+          {pokemon.types.map((t) => <Image
+            src={`/${t.name.toLowerCase()}.png`}
+            alt={t.name}
+            height={45}
+            width={45}
+            style={{
+              marginInline: '5px',
+              marginBottom: '5px'
+            }}
+          />)}
+        </div>
       </Grid>
-      <Grid item xs={8}>
+      <Grid item xs={4} md={6}>
         <PokemonTabs pokemon={pokemon} />
       </Grid>
     </Grid>
