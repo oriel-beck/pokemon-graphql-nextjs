@@ -70,6 +70,7 @@ function PokemonDisplay({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
           flexDirection: 'row'
         }}>
           {pokemon.types.map((t) => <Image
+            key={t.name}
             src={`/${t.name.toLowerCase()}.png`}
             alt={t.name}
             height={45}
