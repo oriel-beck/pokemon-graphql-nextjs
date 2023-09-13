@@ -50,16 +50,12 @@ function PokemonDisplay({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
         <div className="flex flex-row p-4" style={{ width: '100' }}>
           {showShiny ? <StarNo /> : <Star />}
         </div>
-        <Image
-          src={showSprite()}
-          alt={pokemon.key}
-          height={400}
-          width={300}
-          style={{
-            maxHeight: '500px',
-            maxWidth: '300px'
-          }}
-        />
+          <Image
+            src={showSprite()}
+            alt={pokemon.key}
+            height={400}
+            width={300}
+          />
         <div className="bg-blue-700 p-4 m-2 rounded-md flex text-white mt-7">
           <Typography variant="h5" component="h3">
             {pokemon.key[0].toUpperCase() + pokemon.key.substring(1)}

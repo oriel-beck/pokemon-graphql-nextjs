@@ -23,7 +23,7 @@ export function Header() {
     const searchState = useAppSelector((state) => state.searchReducer);
     
     const [searchValue, setSearchValue] = useState<string>(searchState[pathname]);
-    useEffect(() => setSearchValue(searchState[pathname]), [pathname]);
+    useEffect(() => setSearchValue(searchState[pathname]), [pathname, searchState]);
     
     const dispatch = useAppDispatch();
 
