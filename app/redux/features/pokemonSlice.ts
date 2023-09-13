@@ -1,4 +1,4 @@
-import { Pokemon } from "@favware/graphql-pokemon";
+import type { Pokemon } from "@favware/graphql-pokemon";
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface PokemonState extends Pokemon {

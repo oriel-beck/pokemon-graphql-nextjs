@@ -1,4 +1,3 @@
-import { Pokemon } from "@favware/graphql-pokemon";
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface SearchState {
