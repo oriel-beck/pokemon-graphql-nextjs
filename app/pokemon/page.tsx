@@ -33,13 +33,13 @@ function PokemonStatusCase({ state }: { state: Partial<PokemonState> }): ReactEl
 function PokemonDisplay({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
   return (
     <Grid container>
-      <Grid item xs={4}>
-        <Image
-          src={pokemon?.sprite ? pokemon.sprite : '/pokemon-placeholder.png'}
-          alt={pokemon.key}
-          height={500}
-          width={300}
-        ></Image>
+      <Grid item xs={4} className="flex justify-center bg-yellow-200">
+          <Image
+            src={pokemon?.sprite ? pokemon.sprite : '/pokemon-placeholder.png'}
+            alt={pokemon.key}
+            height={500}
+            width={300}
+          ></Image>
       </Grid>
       <Grid item xs={8}>
         <PokemonTabs pokemon={pokemon} />
@@ -92,10 +92,10 @@ function PokemonTabs({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
   return (
     <>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor="secondary" indicatorColor="secondary">
-          <Tab label="Stats" {...a11yProps(0)} color="secondary" />
-          <Tab label="Abilities" {...a11yProps(1)} color="secondary" />
-          <Tab label="Move-sets" {...a11yProps(2)} color="white" />
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor="primary" indicatorColor="secondary">
+          <Tab label="Stats" {...a11yProps(0)} className="placeholder-sky-50" />
+          <Tab label="Abilities" {...a11yProps(1)} />
+          <Tab label="Move-sets" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
