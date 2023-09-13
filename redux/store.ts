@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { default as pokemonReducer } from "@redux/features/pokemonSlice";
-import { default as searchReducer } from "@redux/features/searchSlice";
+import { default as pokemonReducer } from "@redux/features/pokemon/pokemonSlice";
+import { default as searchReducer } from "@redux/features/search/searchSlice";
 
 export const store = configureStore({
     reducer: {

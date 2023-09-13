@@ -7,11 +7,12 @@ import { usePathname } from 'next/navigation'
 
 import { Search, SearchIconWrapper, StyledInputBase } from "@components/search/search";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
-import { SearchState, setSearch } from "@redux/features/searchSlice";
+import { SearchState, setSearch } from "@redux/features/search/searchSlice";
 
 import { Box, Button, Container, IconButton, Menu, Toolbar, Typography, AppBar, MenuItem } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
+import { fetchPokemonData } from "@redux/features/pokemon/pokemonSlice";
 
 const pages = ["Pokemon", "Abilities", "Moves", "Items"];
 
@@ -19,16 +20,16 @@ export function Header() {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
     const pathname = usePathname().substring(1) as keyof SearchState;
 
-    const search = useAppSelector((state) => state.searchReducer);
+    const searchState = useAppSelector((state) => state.searchReducer);
     
-    const [searchValue, setSearchValue] = useState<string>(search[pathname]);
-    useEffect(() => setSearchValue(search[pathname]), [pathname]);
+    const [searchValue, setSearchValue] = useState<string>(searchState[pathname]);
+    useEffect(() => setSearchValue(searchState[pathname]), [pathname]);
     
     const dispatch = useAppDispatch();
 
     const updateSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {
-            // TOOD: search
+            dispatch(fetchPokemonData(searchValue))
         } else {
             dispatch(setSearch({
                 key: pathname,
