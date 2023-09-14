@@ -185,7 +185,7 @@ function HardcodedStatsTable({ pokemon }: { pokemon: PokemonState['pokemon'] }) 
           </TableBody>
         </Table>
       </TableContainer>
-      <Grid container spacing={{ xs: 1 }} columns={{ xs: 4, md: 8 }}>
+      {/* <Grid container spacing={{ xs: 1 }} columns={{ xs: 4, md: 8 }}>
         {pokemon.types.map((t) => (
           <Grid item>
             { }
@@ -199,7 +199,7 @@ function HardcodedStatsTable({ pokemon }: { pokemon: PokemonState['pokemon'] }) 
             { }
           </Grid>
         ))}
-      </Grid>
+      </Grid> */}
     </div>
   )
 }
