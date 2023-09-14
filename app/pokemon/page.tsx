@@ -42,12 +42,12 @@ function PokemonDisplay({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
 
   return (
     <Grid container spacing={{ xs: 1, md: 1, }} columns={{ xs: 4, md: 9 }} className="mt-auto">
-      <Grid item xs={4} md={3} className="flex justify-center items-center bg-yellow-200" style={{
-        paddingTop: '3%',
+      <Grid item xs={4} md={3} className="flex justify-center items-center bg-green-200" style={{
+        paddingTop: '1%',
         flexDirection: 'column'
       }}>
         {/* TODO: stick to right */}
-        <div className="flex flex-row p-4" style={{ width: '100' }}>
+        <div className="flex flex-row p-2" style={{ width: '80%', justifyContent: 'flex-end', cursor: 'pointer' }} onClick={() => setShowShiny(!showShiny)}>
           {showShiny ? <StarNo /> : <Star />}
         </div>
           <Image
@@ -56,7 +56,8 @@ function PokemonDisplay({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
             height={400}
             width={300}
           />
-        <div className="bg-blue-700 p-4 m-2 rounded-md flex text-white mt-7">
+          {/* TODO: decrease margin top of image and everything for mobile */}
+        <div className="bg-blue-700 p-4 rounded-md flex text-white mt-10 mb-12">
           <Typography variant="h5" component="h3">
             {pokemon.key[0].toUpperCase() + pokemon.key.substring(1)}
           </Typography>
@@ -74,7 +75,7 @@ function PokemonDisplay({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
             style={{
               marginInline: '5px',
               // TODO: adapt to mobile
-              marginBottom: '4rem',
+              marginBottom: '2rem',
               maxHeight: '45px'
             }}
           />)}
