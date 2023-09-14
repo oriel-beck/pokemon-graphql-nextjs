@@ -3,9 +3,8 @@ import { gql } from 'graphql-tag';
 
 export const getPokemon = (pokemon: string) => gql(`{
     getPokemon(pokemon: ${pokemon}, takeFlavorTexts: 1) {
-        species
-        baseForme
         key
+        baseForme
         height
         legendary
         mythical
@@ -13,6 +12,12 @@ export const getPokemon = (pokemon: string) => gql(`{
         shinySprite
         sprite
         weight
+        eggGroups
+        otherFormes
+        gender {
+            female
+            male
+        }
         abilities {
             first {
               key

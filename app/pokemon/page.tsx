@@ -1,11 +1,12 @@
 "use client"
 import Image from "next/image";
-import { Box, Grid, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Grid, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from "@mui/material";
 import { PokemonLoadingStatus, PokemonState } from "@redux/features/pokemon/pokemonSlice";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { ReactElement, useState } from "react";
 import { StarNo } from "@app/icons/star-no";
 import { Star } from "@app/icons/star";
+import { inspect } from "util";
 
 export default function Page() {
   const pokemon = useAppSelector((state) => state.pokemonReducer);
@@ -42,21 +43,23 @@ function PokemonDisplay({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
 
   return (
     <Grid container spacing={{ xs: 1, md: 1, }} columns={{ xs: 4, md: 9 }} className="mt-auto">
-      <Grid item xs={4} md={3} className="flex justify-center items-center bg-green-200" style={{
+      <Grid item xs={4} md={3} className="flex max-h-38 justify-center items-center bg-green-200" style={{
         paddingTop: '1%',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        maxHeight: '40rem'
       }}>
         {/* TODO: stick to right */}
-        <div className="flex flex-row p-2" style={{ width: '80%', justifyContent: 'flex-end', cursor: 'pointer' }} onClick={() => setShowShiny(!showShiny)}>
+        <div className="flex flex-row p-2" style={{ width: '80%', height: '80%', justifyContent: 'flex-end', cursor: 'pointer' }} onClick={() => setShowShiny(!showShiny)}>
           {showShiny ? <StarNo /> : <Star />}
         </div>
-          <Image
-            src={showSprite()}
-            alt={pokemon.key}
-            height={400}
-            width={300}
-          />
-          {/* TODO: decrease margin top of image and everything for mobile */}
+        <img
+        className="w-2/4 h-2/4"
+          src={showSprite()}
+          alt={pokemon.key}
+          height={400}
+          width={300}
+        />
+        {/* TODO: decrease margin top of image and everything for mobile */}
         <div className="bg-blue-700 p-4 rounded-md flex text-white mt-10 mb-12">
           <Typography variant="h5" component="h3">
             {pokemon.key[0].toUpperCase() + pokemon.key.substring(1)}
@@ -66,7 +69,7 @@ function PokemonDisplay({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
           display: 'flex',
           flexDirection: 'row'
         }}>
-          {pokemon.types.map((t) => <Image
+          {pokemon.types.map((t) => <img
             key={t.name}
             src={`/${t.name.toLowerCase()}.png`}
             alt={t.name}
@@ -139,7 +142,7 @@ function PokemonTabs({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        Stats
+        <StatsTable pokemon={pokemon} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         Abilities
@@ -149,4 +152,38 @@ function PokemonTabs({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
       </CustomTabPanel>
     </>
   )
+}
+
+function StatsTable({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
+  const rows = parsePokemonData(pokemon);
+  return (
+    <TableContainer style={{ maxHeight: '33rem' }} component={Paper} className="flex-shrink">
+      <Table sx={{ minWidth: 650 }} aria-label="Pokemon stats">
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow
+              key={row.head}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {row.head}
+              </TableCell>
+              <TableCell align="left">{row.value}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+function parsePokemonData(pokemon: PokemonState['pokemon']): { head: string, value: string }[] {
+  return Object.entries(pokemon).map(([key, value]) => ({ head: key, value: parseRowValue(key, value) }));
+}
+
+function parseRowValue(key: string, value: any): string {
+  switch (key) {
+    default:
+      return inspect(value);
+  }
 }
