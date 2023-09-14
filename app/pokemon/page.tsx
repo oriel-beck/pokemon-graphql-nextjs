@@ -1,31 +1,28 @@
 "use client"
 
-import { Box, Grid, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableRow, Tabs, Typography } from "@mui/material";
+import { Backdrop, Box, CircularProgress, Grid, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableRow, Tabs, Typography } from "@mui/material";
 import { PokemonLoadingStatus, PokemonState } from "@redux/features/pokemon/pokemonSlice";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
-import { ReactElement, useState } from "react";
+import { useState } from "react";
 import { StarNo } from "@app/icons/star-no";
 import { Star } from "@app/icons/star";
-import { inspect } from "util";
-import { parsers } from "@utils/pokemon/parsers";
+import { convertToFt, convertToLb } from "@utils/util";
+import { PokemonType } from "@favware/graphql-pokemon";
 
 export default function Page() {
-  const pokemon = useAppSelector((state) => state.pokemonReducer);
+  const pokemonState = useAppSelector((state) => state.pokemonReducer);
   const dispatch = useAppDispatch();
 
-  return (
-    <>
-      <PokemonStatusCase state={pokemon} />
-    </>
-  )
-}
-
-function PokemonStatusCase({ state }: { state: Partial<PokemonState> }): ReactElement {
-  switch (state.status) {
+  switch (pokemonState.status) {
     case PokemonLoadingStatus.Loading:
-      return <>Loading, please wait</>
+      return <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={true}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     case PokemonLoadingStatus.Success:
-      return <PokemonDisplay pokemon={state.pokemon!} />
+      return <PokemonDisplay pokemon={pokemonState.pokemon!} />
     case PokemonLoadingStatus.Failed:
       return <>Pokemon does not exist</>
     default:
@@ -143,7 +140,7 @@ function PokemonTabs({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <StatsTable pokemon={pokemon} />
+        <HardcodedStatsTable pokemon={pokemon} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         Abilities
@@ -155,43 +152,76 @@ function PokemonTabs({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
   )
 }
 
-function StatsTable({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
-  const rows = parsePokemonData(pokemon);
+function HardcodedStatsTable({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
   return (
-    <TableContainer style={{ maxHeight: '33rem' }} component={Paper} className="flex-shrink">
-      <Table sx={{ minWidth: 650 }} aria-label="Pokemon stats">
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.head + '1'}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row" key={row.head + '2'}>
-                <b>
-                  {row.head}
-                </b>
-              </TableCell>
-              <TableCell align="left" key={row.value.key}>{row.value}</TableCell>
+    <div className="flex flex-row space-x-5 p-5">
+      <TableContainer component={Paper} >
+        <Table aria-label="pokedex stats">
+          <TableBody>
+            {/* Pokedex num */}
+            <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableCell component="th" scope="row"><b>Pokedex Entry</b></TableCell>
+              <TableCell align="left">{pokemon.num}</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
+
+            {/* Height */}
+            <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableCell component="th" scope="row"><b>Height</b></TableCell>
+              <TableCell align="left">{pokemon.height}m ({convertToFt(pokemon.height)}ft)</TableCell>
+            </TableRow>
+
+
+            {/* Height */}
+            <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableCell component="th" scope="row"><b>Weight</b></TableCell>
+              <TableCell align="left">{pokemon.weight}kg ({convertToLb(pokemon.weight)}lb)</TableCell>
+            </TableRow>
+
+            {/* Height */}
+            {/* <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+            <TableCell component="th" scope="row"><b>Weight</b></TableCell>
+            <TableCell align="left">{pokemon.weight}kg ({pokemon.weight * 2.20462}lb)</TableCell>
+            </TableRow> */}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Grid container spacing={{ xs: 1 }} columns={{ xs: 4, md: 8 }}>
+        {pokemon.types.map((t) => (
+          <Grid item>
+            { }
+          </Grid>
+        ))}
+      </Grid>
+
+      <Grid container spacing={{ xs: 1 }} columns={{ xs: 4, md: 8 }}>
+        {pokemon.types.map((t) => (
+          <Grid item>
+            { }
+          </Grid>
+        ))}
+      </Grid>
+    </div>
+  )
 }
 
-function parsePokemonData(pokemon: PokemonState['pokemon']): Stats[] {
-  const arr: Stats[] = [];
-  const bannedProps = ['key', 'legendary', 'mythical', 'sprite', 'shinySprite', '__typename']
-  for (const [key, value] of Object.entries(pokemon)) {
-    if (bannedProps.indexOf(key) != -1) continue;
-    if (!value) continue;
-    arr.push(parsers[key as keyof typeof parsers](value))
+function calculateDefense(typeMatchup: ReadonlyArray<PokemonType>) {
+  const obj: Record<string, number> = {};
+  for (const matchup of typeMatchup) {
+    for (const match of Object.entries(matchup.matchup.defending)) {
+      switch (match[0]) {
+        case "doubleEffectiveTypes":
+        case "doubleResistedTypes":
+        case "effectiveTypes":
+        case "effectlessTypes":
+        case "normalTypes":
+        case "resistedTypes":
+      }
+    }
   }
-  return arr;
 }
 
-interface Stats {
-  head: string;
-  value: ReactElement;
-} 
+function calculateDefenseUpdate(types: string[]) {
+  for (const type of types) {
+    
+  }
+}
