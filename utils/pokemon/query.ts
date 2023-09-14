@@ -3,21 +3,9 @@ import { gql } from 'graphql-tag';
 
 export const getPokemon = (pokemon: string) => gql(`{
     getPokemon(pokemon: ${pokemon}, takeFlavorTexts: 1) {
-        key
-        baseForme
-        height
-        legendary
-        mythical
         num
-        shinySprite
-        sprite
+        height
         weight
-        eggGroups
-        otherFormes
-        gender {
-            female
-            male
-        }
         abilities {
             first {
               key
@@ -48,6 +36,23 @@ export const getPokemon = (pokemon: string) => gql(`{
               shortDesc
             }
           }
+        key
+        baseForme
+        legendary
+        mythical
+        shinySprite
+        sprite
+        eggGroups
+        otherFormes
+        cosmeticFormes
+        catchRate {
+            base
+            percentageWithOrdinaryPokeballAtFullHealth
+        }
+        gender {
+            female
+            male
+        }
           baseStats {
             attack
             defense

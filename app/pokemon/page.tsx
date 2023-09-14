@@ -1,12 +1,13 @@
 "use client"
-import Image from "next/image";
-import { Box, Grid, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from "@mui/material";
+
+import { Box, Grid, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableRow, Tabs, Typography } from "@mui/material";
 import { PokemonLoadingStatus, PokemonState } from "@redux/features/pokemon/pokemonSlice";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { ReactElement, useState } from "react";
 import { StarNo } from "@app/icons/star-no";
 import { Star } from "@app/icons/star";
 import { inspect } from "util";
+import { parsers } from "@utils/pokemon/parsers";
 
 export default function Page() {
   const pokemon = useAppSelector((state) => state.pokemonReducer);
@@ -53,7 +54,7 @@ function PokemonDisplay({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
           {showShiny ? <StarNo /> : <Star />}
         </div>
         <img
-        className="w-2/4 h-2/4"
+          className="w-2/4 h-2/4"
           src={showSprite()}
           alt={pokemon.key}
           height={400}
@@ -162,13 +163,15 @@ function StatsTable({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
         <TableBody>
           {rows.map((row) => (
             <TableRow
-              key={row.head}
+              key={row.head + '1'}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
-                {row.head}
+              <TableCell component="th" scope="row" key={row.head + '2'}>
+                <b>
+                  {row.head}
+                </b>
               </TableCell>
-              <TableCell align="left">{row.value}</TableCell>
+              <TableCell align="left" key={row.value.key}>{row.value}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -177,13 +180,18 @@ function StatsTable({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
   );
 }
 
-function parsePokemonData(pokemon: PokemonState['pokemon']): { head: string, value: string }[] {
-  return Object.entries(pokemon).map(([key, value]) => ({ head: key, value: parseRowValue(key, value) }));
+function parsePokemonData(pokemon: PokemonState['pokemon']): Stats[] {
+  const arr: Stats[] = [];
+  const bannedProps = ['key', 'legendary', 'mythical', 'sprite', 'shinySprite', '__typename']
+  for (const [key, value] of Object.entries(pokemon)) {
+    if (bannedProps.indexOf(key) != -1) continue;
+    if (!value) continue;
+    arr.push(parsers[key as keyof typeof parsers](value))
+  }
+  return arr;
 }
 
-function parseRowValue(key: string, value: any): string {
-  switch (key) {
-    default:
-      return inspect(value);
-  }
-}
+interface Stats {
+  head: string;
+  value: ReactElement;
+} 
