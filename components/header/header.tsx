@@ -18,13 +18,13 @@ const pages = ["Pokemon", "Abilities", "Moves", "Items"];
 
 export function Header() {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-    const pathname = usePathname().substring(1) as keyof SearchState;
+    const pathname = usePathname().split('/').at(1) as keyof SearchState;
 
     const searchState = useAppSelector((state) => state.searchReducer);
-    
+
     const [searchValue, setSearchValue] = useState<string>(searchState[pathname]);
     useEffect(() => setSearchValue(searchState[pathname]), [pathname, searchState]);
-    
+
     const dispatch = useAppDispatch();
 
     const updateSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -95,7 +95,7 @@ export function Header() {
                     </Box>
                     <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                         {pages.map((page) => (
-                            <Link key={page} href={page.toLowerCase()}>
+                            <Link key={page} href={page.toLowerCase()} replace>
                                 <Button
                                     key={page}
                                     onClick={handleCloseNavMenu}
@@ -111,7 +111,6 @@ export function Header() {
                             <SearchIcon />
                         </SearchIconWrapper>
                         <StyledInputBase
-                            // TODO: use the route to determine which key of searchState it's using
                             value={searchValue}
                             onChange={e => setSearchValue(e.target.value)}
                             onKeyUp={updateSearch}

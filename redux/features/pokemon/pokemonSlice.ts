@@ -47,7 +47,8 @@ export const pokemon = createSlice({
 export const fetchPokemonData = createAsyncThunk('pokemon/fetchPokemonData', async (pokemon: string) => {
     const res = await client.query<{getPokemon: Query['getPokemon']}>({
         query: getPokemon(pokemon)
-    });
+    }).catch(() => null);
+    if (!res) throw new Error("Invalid pokemon");
     return res.data.getPokemon
 });
 
