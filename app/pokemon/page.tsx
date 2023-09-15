@@ -1,6 +1,6 @@
 "use client"
 
-import { Backdrop, Box, CircularProgress, Grid, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableRow, Tabs, Typography } from "@mui/material";
+import { Backdrop, Box, CircularProgress, Grid, LinearProgress, LinearProgressProps, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableRow, Tabs, Typography } from "@mui/material";
 import { PokemonLoadingStatus, PokemonState } from "@redux/features/pokemon/pokemonSlice";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { useState } from "react";
@@ -8,6 +8,7 @@ import { StarNo } from "@app/icons/star-no";
 import { Star } from "@app/icons/star";
 import { convertToFt, convertToLb } from "@utils/util";
 import { PokemonType } from "@favware/graphql-pokemon";
+import Image from "next/image";
 
 export default function Page() {
   const pokemonState = useAppSelector((state) => state.pokemonReducer);
@@ -153,75 +154,200 @@ function PokemonTabs({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
 }
 
 function HardcodedStatsTable({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
+  const defenseEffectiveness = calculateTypeEffectiveness(pokemon.types);
+
   return (
-    <div className="flex flex-row space-x-5 p-5">
+    <>
+      <div className="flex flex-row space-x-5 p-5">
+        <TableContainer component={Paper} >
+          <Table aria-label="pokedex stats">
+            <TableBody>
+              {/* Pokedex num */}
+              <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell component="th" scope="row"><b>Pokedex Entry</b></TableCell>
+                <TableCell align="left">{pokemon.num}</TableCell>
+              </TableRow>
+
+              {/* Height */}
+              <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell component="th" scope="row"><b>Height</b></TableCell>
+                <TableCell align="left">{pokemon.height}m ({convertToFt(pokemon.height)})</TableCell>
+              </TableRow>
+
+
+              {/* Height */}
+              <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell component="th" scope="row"><b>Weight</b></TableCell>
+                <TableCell align="left">{pokemon.weight}kg ({convertToLb(pokemon.weight)}lb)</TableCell>
+              </TableRow>
+
+              {/* Height */}
+              <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell component="th" scope="row"><b>HP</b></TableCell>
+                <TableCell align="left">
+                  <Box sx={{ width: '100%' }}>
+                    <LinearProgressWithLabel value={percentage(pokemon.baseStats.hp, maxDefaultStat(pokemon.baseStats.hp))} />
+                  </Box>
+                </TableCell>
+              </TableRow>
+              <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell component="th" scope="row"><b>Attack</b></TableCell>
+                <TableCell align="left">
+                  <Box sx={{ width: '100%' }}>
+                    <LinearProgressWithLabel value={percentage(pokemon.baseStats.attack, maxDefaultStat(pokemon.baseStats.attack))} />
+                  </Box>
+                </TableCell>
+              </TableRow>
+              <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell component="th" scope="row"><b>Defense</b></TableCell>
+                <TableCell align="left">
+                  <Box sx={{ width: '100%' }}>
+                    <LinearProgressWithLabel value={percentage(pokemon.baseStats.defense, maxDefaultStat(pokemon.baseStats.defense))} />
+                  </Box>
+                </TableCell>
+              </TableRow>
+              <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell component="th" scope="row"><b>Special Attack</b></TableCell>
+                <TableCell align="left">
+                  <Box sx={{ width: '100%' }}>
+                    <LinearProgressWithLabel value={percentage(pokemon.baseStats.specialattack, maxDefaultStat(pokemon.baseStats.specialattack))} />
+                  </Box>
+                </TableCell>
+              </TableRow>
+              <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell component="th" scope="row"><b>Special Defense</b></TableCell>
+                <TableCell align="left">
+                  <Box sx={{ width: '100%' }}>
+                    <LinearProgressWithLabel value={percentage(pokemon.baseStats.specialdefense, maxDefaultStat(pokemon.baseStats.specialdefense))} />
+                  </Box>
+                </TableCell>
+              </TableRow>
+              <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell component="th" scope="row"><b>Speed</b></TableCell>
+                <TableCell align="left">
+                  <Box sx={{ width: '100%' }}>
+                    <LinearProgressWithLabel value={percentage(pokemon.baseStats.speed, maxDefaultStat(pokemon.baseStats.speed))} />
+                  </Box>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
       <TableContainer component={Paper} >
         <Table aria-label="pokedex stats">
           <TableBody>
-            {/* Pokedex num */}
-            <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell component="th" scope="row"><b>Pokedex Entry</b></TableCell>
-              <TableCell align="left">{pokemon.num}</TableCell>
-            </TableRow>
-
-            {/* Height */}
-            <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell component="th" scope="row"><b>Height</b></TableCell>
-              <TableCell align="left">{pokemon.height}m ({convertToFt(pokemon.height)}ft)</TableCell>
-            </TableRow>
-
-
-            {/* Height */}
-            <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell component="th" scope="row"><b>Weight</b></TableCell>
-              <TableCell align="left">{pokemon.weight}kg ({convertToLb(pokemon.weight)}lb)</TableCell>
-            </TableRow>
-
-            {/* Height */}
-            {/* <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-            <TableCell component="th" scope="row"><b>Weight</b></TableCell>
-            <TableCell align="left">{pokemon.weight}kg ({pokemon.weight * 2.20462}lb)</TableCell>
-            </TableRow> */}
+            {mapTypesToTableCells(defenseEffectiveness)}
           </TableBody>
         </Table>
       </TableContainer>
-      {/* <Grid container spacing={{ xs: 1 }} columns={{ xs: 4, md: 8 }}>
-        {pokemon.types.map((t) => (
-          <Grid item>
-            { }
-          </Grid>
-        ))}
-      </Grid>
-
-      <Grid container spacing={{ xs: 1 }} columns={{ xs: 4, md: 8 }}>
-        {pokemon.types.map((t) => (
-          <Grid item>
-            { }
-          </Grid>
-        ))}
-      </Grid> */}
-    </div>
+    </>
   )
 }
 
-function calculateDefense(typeMatchup: ReadonlyArray<PokemonType>) {
-  const obj: Record<string, number> = {};
-  for (const matchup of typeMatchup) {
-    for (const match of Object.entries(matchup.matchup.defending)) {
-      switch (match[0]) {
-        case "doubleEffectiveTypes":
-        case "doubleResistedTypes":
-        case "effectiveTypes":
-        case "effectlessTypes":
-        case "normalTypes":
-        case "resistedTypes":
-      }
+function calculateTypeEffectiveness(types: readonly PokemonType[]) {
+  const typeEffectiveness: Record<string, number> = {
+    normal: 1,
+    fire: 1,
+    water: 1,
+    electric: 1,
+    grass: 1,
+    ice: 1,
+    fighting: 1,
+    poison: 1,
+    ground: 1,
+    flying: 1,
+    psychic: 1,
+    bug: 1,
+    rock: 1,
+    ghost: 1,
+    dragon: 1,
+    dark: 1,
+    steel: 1,
+    fairy: 1,
+  };
+
+  // Iterate through each type in the input array
+  for (const type of types) {
+    // Access the defending matchups for the current type
+    const defending = type.matchup.defending;
+
+    // Update type effectiveness based on the matchups
+    for (const effectiveType of defending.effectiveTypes) {
+      typeEffectiveness[effectiveType] *= 2;
+    }
+
+    for (const resistedType of defending.resistedTypes) {
+      typeEffectiveness[resistedType] *= 0.5;
+    }
+
+    for (const doubleEffectiveType of defending.doubleEffectiveTypes) {
+      typeEffectiveness[doubleEffectiveType] *= 4;
     }
   }
+
+  return typeEffectiveness;
 }
 
-function calculateDefenseUpdate(types: string[]) {
-  for (const type of types) {
-    
+function mapTypesToTableCells(types: Record<string, number>) {
+  let num = 0;
+  const arr = [];
+  const keys = Object.keys(types);
+  const values = Object.values(types);
+  while (!!keys.length) {
+    const tmpkeys = [];
+    for (const key of keys.splice(0, 9)) {
+      tmpkeys.push(
+        <TableCell align="center" key={`${num}-${key}`}>
+          <Image
+            src={`/${key}.png`}
+            alt={key}
+            height={45}
+            width={45}
+          />
+        </TableCell>
+      )
+    }
+    arr.push(<TableRow>{tmpkeys}</TableRow>)
+
+    const tmpvalues = [];
+    for (const value of values.splice(0, 9)) {
+      tmpvalues.push(
+        <TableCell align="center" key={`${num}-${value}`}>
+          {value}
+        </TableCell>
+      )
+    }
+    arr.push(<TableRow>{tmpvalues}</TableRow>)
   }
+
+  return arr;
 }
+
+function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ width: '100%', mr: 1 }}>
+        <LinearProgress variant="determinate" {...props} />
+      </Box>
+      <Box sx={{ minWidth: 35 }}>
+        <Typography variant="body2" color="text.secondary">{`${Math.round(
+          props.value,
+        )}%`}</Typography>
+      </Box>
+    </Box>
+  );
+}
+
+const maxIV = 31;
+const maxEV = 252;
+const level = 100;
+const goodNatureModifier = 1.1;
+const badNatureModifier = 0.9;
+
+const percentage = (partialValue: number, totalValue: number) => (100 * partialValue) / totalValue;
+
+// min/max stats
+const minStat = (baseStat: number) => Math.floor(baseStat * badNatureModifier) * level;
+const maxStat = (baseStat: number) => Math.floor(((2 * baseStat + maxIV + Math.floor(maxEV / 4)) * goodNatureModifier) / 100 + 5) * level;
+const maxDefaultStat = (baseStat: number) => Math.floor(2 * baseStat + 5);
