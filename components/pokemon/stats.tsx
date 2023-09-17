@@ -1,11 +1,11 @@
 import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
-import type { PokemonState } from "@redux/features/pokemon/pokemonSlice";
 import { calculateTypeEffectiveness, precentageBaseStat } from "@utils/pokemon/util";
 import { convertToFt, convertToLb } from "@utils/util";
 import { LinearProgressWithLabel } from "./bar";
 import { mapEffectivenessToTableCells } from "./effectiveness";
+import { Query } from "@favware/graphql-pokemon";
 
-export function StatsTable({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
+export function StatsTable({ pokemon }: { pokemon: Query['getPokemon'] }) {
     const defenseEffectiveness = calculateTypeEffectiveness(pokemon.types);
   
     return (

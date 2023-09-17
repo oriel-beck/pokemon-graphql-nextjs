@@ -1,40 +1,26 @@
 "use client"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 import { Search, SearchIconWrapper, StyledInputBase } from "@components/search/search";
-import { useAppDispatch, useAppSelector } from "@redux/hooks";
-import { SearchState, setSearch } from "@redux/features/search/searchSlice";
 
 import { Box, Button, Container, IconButton, Menu, Toolbar, Typography, AppBar, MenuItem } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import { fetchPokemonData } from "@redux/features/pokemon/pokemonSlice";
 
 const pages = ["Pokemon", "Abilities", "Moves", "Items"];
 
 export function Header() {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-    const pathname = usePathname().split('/').at(1) as keyof SearchState;
+    const pathname = usePathname();
+    const router = useRouter();
 
-    const searchState = useAppSelector((state) => state.searchReducer);
-
-    const [searchValue, setSearchValue] = useState<string>(searchState[pathname]);
-    useEffect(() => setSearchValue(searchState[pathname]), [pathname, searchState]);
-
-    const dispatch = useAppDispatch();
-
-    const updateSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const search = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {
-            dispatch(fetchPokemonData(searchValue))
-        } else {
-            dispatch(setSearch({
-                key: pathname,
-                value: event.currentTarget.value
-            }));
+            router.push(`${pathname}/${event.currentTarget.value}`)
         }
     }
 
@@ -111,9 +97,7 @@ export function Header() {
                             <SearchIcon />
                         </SearchIconWrapper>
                         <StyledInputBase
-                            value={searchValue}
-                            onChange={e => setSearchValue(e.target.value)}
-                            onKeyUp={updateSearch}
+                            onKeyUp={search}
                             placeholder="Search…"
                             inputProps={{ "aria-label": "search" }}
                         />

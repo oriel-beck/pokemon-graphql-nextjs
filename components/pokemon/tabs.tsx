@@ -1,9 +1,9 @@
 import { Box, Tab, Tabs, Typography } from "@mui/material";
-import type { PokemonState } from "@redux/features/pokemon/pokemonSlice";
 import { useState } from "react";
 import { StatsTable } from "./stats";
+import { Query } from "@favware/graphql-pokemon";
 
-export function PokemonTabs({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
+export function PokemonTabs({ pokemon }: { pokemon: Query['getPokemon'] }) {
     const [value, setValue] = useState(0);
 
     const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
