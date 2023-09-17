@@ -1,12 +1,12 @@
-import { Star } from "@app/icons/star";
-import { StarNo } from "@app/icons/star-no";
+import { Star } from "@icons/star";
+import { StarNo } from "@icons/star-no";
 import { Grid, Typography } from "@mui/material";
-import type { PokemonState } from "@redux/features/pokemon/pokemonSlice";
 import { useState } from "react";
 import { PokemonTabs } from "./tabs";
 import Image from "next/image";
+import { Query } from "@favware/graphql-pokemon";
 
-export function PokemonDisplay({ pokemon }: { pokemon: PokemonState['pokemon'] }) {
+export function PokemonDisplay({ pokemon }: { pokemon: Query['getPokemon'] }) {
     const [showShiny, setShowShiny] = useState(false);
 
     function showSprite() {
