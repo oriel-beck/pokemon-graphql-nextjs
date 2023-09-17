@@ -10,7 +10,7 @@ export function mapEffectivenessToTableCells(types: Record<string, number>) {
         const tmpkeys = [];
         for (const key of keys.splice(0, 9)) {
             tmpkeys.push(
-                <TableCell align="center" key={num}>
+                <TableCell align="center" key={++num}>
                     <Image
                         src={`/${key}.png`}
                         alt={key}
@@ -19,23 +19,21 @@ export function mapEffectivenessToTableCells(types: Record<string, number>) {
                     />
                 </TableCell>
             )
-            num++;
-
         }
-        arr.push(<TableRow>{tmpkeys}</TableRow>);
+
+        arr.push(<TableRow key={++num} >{tmpkeys}</TableRow>);
 
         const tmpvalues = [];
         for (const value of values.splice(0, 9)) {
             tmpvalues.push(
-                <TableCell align="center" key={num}>
+                <TableCell align="center" key={++num}>
                     {value}
                 </TableCell>
             )
-            num++;
 
         }
 
-        arr.push(<TableRow>{tmpvalues}</TableRow>);
+        arr.push(<TableRow key={++num}>{tmpvalues}</TableRow>);
     }
 
     return arr;
