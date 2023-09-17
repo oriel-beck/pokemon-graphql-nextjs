@@ -5,7 +5,6 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Providers } from "@redux/provider";
 import { Header } from "@components/header/header";
 import { Footer } from "@components/footer/footer";
 
@@ -24,11 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>
           <Header></Header>
           {children}
           <Footer></Footer>
-        </Providers>
       </body>
     </html>
   )
