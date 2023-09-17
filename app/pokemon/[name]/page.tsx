@@ -4,27 +4,13 @@ import { Backdrop, CircularProgress } from "@mui/material";
 import { PokemonLoadingStatus } from "@redux/features/pokemon/pokemonSlice";
 import { PokemonDisplay } from "@components/pokemon/main";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { client } from "@app/client";
-import { Query } from "@favware/graphql-pokemon";
 import { getPokemon } from "@utils/pokemon/query";
+import { useQuery } from "../../../hooks/use-query";
 
 export default function Page() {
     const params = useParams();
     const pokemon = params.name as string;
-    const [state, setState] = useState(PokemonLoadingStatus.Loading);
-    const [pokemonData, setPokemonData] = useState<Query['getPokemon'] | null>(null);
-
-    useEffect(() => {
-        client.query<{ getPokemon: Query['getPokemon'] }>({
-            query: getPokemon(pokemon)
-        }).then((res) => {
-            setPokemonData(res.data.getPokemon);
-            setState(PokemonLoadingStatus.Success);
-        }).catch(() => {
-            setState(PokemonLoadingStatus.Failed);
-        });
-    }, []);
+    const { state, data } = useQuery(getPokemon(pokemon));
 
     switch (state) {
         case PokemonLoadingStatus.Loading:
@@ -35,7 +21,7 @@ export default function Page() {
                 <CircularProgress color="inherit" />
             </Backdrop>
         case PokemonLoadingStatus.Success:
-            return <PokemonDisplay pokemon={pokemonData!} />
+            return <PokemonDisplay pokemon={data!} />
         case PokemonLoadingStatus.Failed:
             return <>Pokemon does not exist</>
         default:
