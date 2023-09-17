@@ -1,11 +1,11 @@
 "use client"
 
 import { Backdrop, CircularProgress } from "@mui/material";
-import { PokemonLoadingStatus } from "@redux/features/pokemon/pokemonSlice";
 import { PokemonDisplay } from "@components/pokemon/main";
 import { useParams } from "next/navigation";
 import { getPokemon } from "@utils/pokemon/query";
 import { useQuery } from "../../../hooks/use-query";
+import { PokemonLoadingStatus } from "../../../constants";
 
 export default function Page() {
     const params = useParams();

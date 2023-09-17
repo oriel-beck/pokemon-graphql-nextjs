@@ -1,8 +1,8 @@
 import { client } from "@app/client";
 import { Query } from "@favware/graphql-pokemon";
-import { PokemonLoadingStatus } from "@redux/features/pokemon/pokemonSlice";
 import gql from "graphql-tag";
 import { useState, useEffect } from "react";
+import { PokemonLoadingStatus } from "../constants";
 
 export function useQuery(query: ReturnType<typeof gql>) {
     const [state, setState] = useState(PokemonLoadingStatus.Loading);
