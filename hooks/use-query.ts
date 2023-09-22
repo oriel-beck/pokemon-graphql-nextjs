@@ -3,15 +3,17 @@ import { Query } from "@favware/graphql-pokemon";
 import gql from "graphql-tag";
 import { useState, useEffect } from "react";
 import { PokemonLoadingStatus } from "../constants";
+import { ApolloQueryResult } from "apollo-client";
 
-export function useQuery(query: ReturnType<typeof gql>) {
+export function useQuery<T>(query: ReturnType<typeof gql>) {
     const [state, setState] = useState(PokemonLoadingStatus.Loading);
-    const [data, setData] = useState<Query['getPokemon'] | null>(null);
+    const [data, setData] = useState<T | null>(null);
 
     useEffect(() => {
-        client.query<{ getPokemon: Query['getPokemon'] }>({ query })
+        client.query<T>({ query })
             .then((res) => {
-                setData(res.data.getPokemon);
+                console.log(res.data)
+                setData(res.data);
                 setState(PokemonLoadingStatus.Success);
             }).catch(() => {
                 setState(PokemonLoadingStatus.Failed);

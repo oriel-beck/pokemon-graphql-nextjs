@@ -3,10 +3,10 @@ import { calculateTypeEffectiveness, precentageBaseStat } from "@utils/pokemon/u
 import { convertToFt, convertToLb } from "@utils/util";
 import { LinearProgressWithLabel } from "./bar";
 import { mapEffectivenessToTableCells } from "./effectiveness";
-import { Query } from "@favware/graphql-pokemon";
+import type { Pokemon } from "@utils/pokemon/class";
 
-export function StatsTable({ pokemon }: { pokemon: Query['getPokemon'] }) {
-    const defenseEffectiveness = calculateTypeEffectiveness(pokemon.types);
+export function StatsTable({ pokemon }: { pokemon: Pokemon }) {
+    // const defenseEffectiveness = calculateTypeEffectiveness(pokemon.types);
   
     return (
       <>
@@ -16,21 +16,21 @@ export function StatsTable({ pokemon }: { pokemon: Query['getPokemon'] }) {
               <TableBody>
                 {/* Pokedex num */}
                 <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                  <TableCell component="th" scope="row"><b>Pokedex Entry</b></TableCell>
-                  <TableCell align="left">{pokemon.num}</TableCell>
+                  <TableCell component="th" scope="row"><b>National Pokedex Entry</b></TableCell>
+                  <TableCell align="left">{pokemon.pokemon.pokemon_v2_pokemonspecy.pokemon_v2_pokemondexnumbers[0].pokedex_number}</TableCell>
                 </TableRow>
   
                 {/* HEIGHT */}
                 <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                   <TableCell component="th" scope="row"><b>Height</b></TableCell>
-                  <TableCell align="left">{pokemon.height}m ({convertToFt(pokemon.height)})</TableCell>
+                  <TableCell align="left">{pokemon.pokemon.height}m ({convertToFt(pokemon.pokemon.height)})</TableCell>
                 </TableRow>
   
   
                 {/* WEIGHT */}
                 <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                   <TableCell component="th" scope="row"><b>Weight</b></TableCell>
-                  <TableCell align="left">{pokemon.weight}kg ({convertToLb(pokemon.weight)}lb)</TableCell>
+                  <TableCell align="left">{pokemon.pokemon.weight}kg ({convertToLb(pokemon.pokemon.weight)}lb)</TableCell>
                 </TableRow>
   
                 {/* HP */}
@@ -38,7 +38,7 @@ export function StatsTable({ pokemon }: { pokemon: Query['getPokemon'] }) {
                   <TableCell component="th" scope="row"><b>HP</b></TableCell>
                   <TableCell align="left">
                     <Box sx={{ width: '100%' }}>
-                      <LinearProgressWithLabel value={precentageBaseStat(pokemon.baseStats.hp)} />
+                      <LinearProgressWithLabel value={precentageBaseStat(pokemon.pokemon.pokemon_v2_pokemonstats[0].base_stat)} />
                     </Box>
                   </TableCell>
                 </TableRow>
@@ -48,7 +48,7 @@ export function StatsTable({ pokemon }: { pokemon: Query['getPokemon'] }) {
                   <TableCell component="th" scope="row"><b>Attack</b></TableCell>
                   <TableCell align="left">
                     <Box sx={{ width: '100%' }}>
-                      <LinearProgressWithLabel value={precentageBaseStat(pokemon.baseStats.attack)} />
+                      <LinearProgressWithLabel value={precentageBaseStat(pokemon.pokemon.pokemon_v2_pokemonstats[1].base_stat)} />
                     </Box>
                   </TableCell>
                 </TableRow>
@@ -58,7 +58,7 @@ export function StatsTable({ pokemon }: { pokemon: Query['getPokemon'] }) {
                   <TableCell component="th" scope="row"><b>Defense</b></TableCell>
                   <TableCell align="left">
                     <Box sx={{ width: '100%' }}>
-                      <LinearProgressWithLabel value={precentageBaseStat(pokemon.baseStats.defense)} />
+                      <LinearProgressWithLabel value={precentageBaseStat(pokemon.pokemon.pokemon_v2_pokemonstats[2].base_stat)} />
                     </Box>
                   </TableCell>
                 </TableRow>
@@ -68,7 +68,7 @@ export function StatsTable({ pokemon }: { pokemon: Query['getPokemon'] }) {
                   <TableCell component="th" scope="row"><b>Special Attack</b></TableCell>
                   <TableCell align="left">
                     <Box sx={{ width: '100%' }}>
-                      <LinearProgressWithLabel value={precentageBaseStat(pokemon.baseStats.specialattack)} />
+                      <LinearProgressWithLabel value={precentageBaseStat(pokemon.pokemon.pokemon_v2_pokemonstats[3].base_stat)} />
                     </Box>
                   </TableCell>
                 </TableRow>
@@ -78,7 +78,7 @@ export function StatsTable({ pokemon }: { pokemon: Query['getPokemon'] }) {
                   <TableCell component="th" scope="row"><b>Special Defense</b></TableCell>
                   <TableCell align="left">
                     <Box sx={{ width: '100%' }}>
-                      <LinearProgressWithLabel value={precentageBaseStat(pokemon.baseStats.specialdefense)} />
+                      <LinearProgressWithLabel value={precentageBaseStat(pokemon.pokemon.pokemon_v2_pokemonstats[4].base_stat)} />
                     </Box>
                   </TableCell>
                 </TableRow>
@@ -88,7 +88,7 @@ export function StatsTable({ pokemon }: { pokemon: Query['getPokemon'] }) {
                   <TableCell component="th" scope="row"><b>Speed</b></TableCell>
                   <TableCell align="left">
                     <Box sx={{ width: '100%' }}>
-                      <LinearProgressWithLabel value={precentageBaseStat(pokemon.baseStats.speed)} />
+                      <LinearProgressWithLabel value={precentageBaseStat(pokemon.pokemon.pokemon_v2_pokemonstats[5].base_stat)} />
                     </Box>
                   </TableCell>
                 </TableRow>
@@ -99,7 +99,8 @@ export function StatsTable({ pokemon }: { pokemon: Query['getPokemon'] }) {
         <TableContainer component={Paper} className="mb-12" >
           <Table aria-label="pokedex stats">
             <TableBody>
-              {mapEffectivenessToTableCells(defenseEffectiveness)}
+              {/* TODO: recalculate using the better stats */}
+              {/* {mapEffectivenessToTableCells(defenseEffectiveness)} */}
             </TableBody>
           </Table>
         </TableContainer>

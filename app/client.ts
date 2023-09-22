@@ -6,7 +6,7 @@ import { HttpLink } from "apollo-link-http";
 // Instantiate required constructor fields
 const cache = new InMemoryCache();
 const link = new HttpLink({
-  uri: "https://graphqlpokemon.favware.tech/v7"
+  uri: "https://beta.pokeapi.co/graphql/v1beta"
 });
 
 export const client = new ApolloClient({

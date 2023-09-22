@@ -1,10 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
+    domains: ['play.pokemonshowdown.com'],
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'play.pokemonshowdown.com',
+        pathname: '/sprites/*',
+        port: ''
       },
     ],
   },

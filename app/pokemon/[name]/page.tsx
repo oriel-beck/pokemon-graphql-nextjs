@@ -3,14 +3,16 @@
 import { Backdrop, CircularProgress } from "@mui/material";
 import { PokemonDisplay } from "@components/pokemon/main";
 import { useParams } from "next/navigation";
-import { getPokemon } from "@utils/pokemon/query";
+import { PokemonRoot, getPokemon } from "@utils/pokemon/query";
 import { useQuery } from "../../../hooks/use-query";
 import { PokemonLoadingStatus } from "../../../constants";
+import { Pokemon } from "@utils/pokemon/class";
 
 export default function Page() {
     const params = useParams();
     const pokemon = params.name as string;
-    const { state, data } = useQuery(getPokemon(pokemon));
+    const { state, data } = useQuery<PokemonRoot>(getPokemon(pokemon));
+    const pokedata = data as unknown as PokemonRoot['data'];
 
     switch (state) {
         case PokemonLoadingStatus.Loading:
@@ -21,7 +23,7 @@ export default function Page() {
                 <CircularProgress color="inherit" />
             </Backdrop>
         case PokemonLoadingStatus.Success:
-            return <PokemonDisplay pokemon={data!} />
+            return <PokemonDisplay pokemon={new Pokemon(pokedata)} />
         case PokemonLoadingStatus.Failed:
             return <>Pokemon does not exist</>
         default:

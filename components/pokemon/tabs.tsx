@@ -1,9 +1,9 @@
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { useState } from "react";
 import { StatsTable } from "./stats";
-import { Query } from "@favware/graphql-pokemon";
+import type { Pokemon } from "@utils/pokemon/class";
 
-export function PokemonTabs({ pokemon }: { pokemon: Query['getPokemon'] }) {
+export function PokemonTabs({ pokemon }: { pokemon: Pokemon }) {
     const [value, setValue] = useState(0);
 
     const handleChange = (_event: React.SyntheticEvent, newValue: number) => {

@@ -4,14 +4,12 @@ import { Grid, Typography } from "@mui/material";
 import { useState } from "react";
 import { PokemonTabs } from "./tabs";
 import Image from "next/image";
-import { Query } from "@favware/graphql-pokemon";
+import type { Pokemon } from "@utils/pokemon/class";
 
-export function PokemonDisplay({ pokemon }: { pokemon: Query['getPokemon'] }) {
+export function PokemonDisplay({ pokemon }: { pokemon: Pokemon }) {
     const [showShiny, setShowShiny] = useState(false);
 
     function showSprite() {
-        if (!showShiny && !pokemon?.sprite) return '/pokemon-placeholder.png';
-        if (showShiny && !pokemon?.shinySprite) return '/pokemon-placeholder.png';
         return showShiny ? pokemon.shinySprite : pokemon.sprite;
     }
 
@@ -34,21 +32,22 @@ export function PokemonDisplay({ pokemon }: { pokemon: Query['getPokemon'] }) {
                     maxWidth: 150
                 }}
                     src={showSprite()}
-                    alt={pokemon.key}
+                    alt={pokemon.pokemon.name}
                     height={400}
                     width={200}
                 />
                 {/* TODO: decrease margin top of image and everything for mobile */}
                 <div className="bg-blue-700 p-4 rounded-md flex text-white mt-10 mb-12">
                     <Typography variant="h5" component="h3">
-                        {pokemon.key[0].toUpperCase() + pokemon.key.substring(1)}
+                        {pokemon.pokemon.name[0].toUpperCase() + pokemon.pokemon.name.substring(1)}
                     </Typography>
                 </div>
                 <div style={{
                     display: 'flex',
                     flexDirection: 'row'
                 }}>
-                    {pokemon.types.map((t) => <img
+                    {/* TODO: recalculate using the better data */}
+                    {/* {pokemon.types.map((t) => <img
                         key={t.name}
                         src={`/${t.name.toLowerCase()}.png`}
                         alt={t.name}
@@ -58,7 +57,7 @@ export function PokemonDisplay({ pokemon }: { pokemon: Query['getPokemon'] }) {
                             marginBottom: '2rem',
                             maxHeight: '45px'
                         }}
-                    />)}
+                    />)} */}
                 </div>
             </Grid>
             <Grid item xs={4} md={6}>
