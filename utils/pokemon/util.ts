@@ -1,6 +1,6 @@
-import type { PokemonType } from "@favware/graphql-pokemon";
+import { PokemonV2Pokemontype } from "./query";
 
-export function calculateTypeEffectiveness(types: readonly PokemonType[]) {
+export function calculateTypeEffectiveness(types: PokemonV2Pokemontype[]) {
     const typeEffectiveness: Record<string, number> = {
         normal: 1,
         fire: 1,
@@ -24,20 +24,8 @@ export function calculateTypeEffectiveness(types: readonly PokemonType[]) {
 
     // Iterate through each type in the input array
     for (const type of types) {
-        // Access the defending matchups for the current type
-        const defending = type.matchup.defending;
-
-        // Update type effectiveness based on the matchups
-        for (const effectiveType of defending.effectiveTypes) {
-            typeEffectiveness[effectiveType] *= 2;
-        }
-
-        for (const resistedType of defending.resistedTypes) {
-            typeEffectiveness[resistedType] *= 0.5;
-        }
-
-        for (const doubleEffectiveType of defending.doubleEffectiveTypes) {
-            typeEffectiveness[doubleEffectiveType] *= 4;
+        for (const resist of type.pokemon_v2_type.pokemonV2TypeefficaciesByTargetTypeId) {
+            typeEffectiveness[resist.pokemon_v2_type.name] *= resist.damage_factor / 100;
         }
     }
 

@@ -6,11 +6,11 @@ import { mapEffectivenessToTableCells } from "./effectiveness";
 import type { Pokemon } from "@utils/pokemon/class";
 
 export function StatsTable({ pokemon }: { pokemon: Pokemon }) {
-    // const defenseEffectiveness = calculateTypeEffectiveness(pokemon.types);
+    const defenseEffectiveness = calculateTypeEffectiveness(pokemon.pokemon.pokemon_v2_pokemontypes);
   
     return (
       <>
-        <div className="flex flex-row space-x-5 p-5">
+        <div className="flex flex-row space-x-5 p-1 pb-2">
           <TableContainer component={Paper} >
             <Table aria-label="pokedex stats">
               <TableBody>
@@ -96,11 +96,11 @@ export function StatsTable({ pokemon }: { pokemon: Pokemon }) {
             </Table>
           </TableContainer>
         </div>
-        <TableContainer component={Paper} className="mb-12" >
+        <TableContainer component={Paper} className="mb-16" >
           <Table aria-label="pokedex stats">
             <TableBody>
               {/* TODO: recalculate using the better stats */}
-              {/* {mapEffectivenessToTableCells(defenseEffectiveness)} */}
+              {mapEffectivenessToTableCells(defenseEffectiveness)}
             </TableBody>
           </Table>
         </TableContainer>
