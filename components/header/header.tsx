@@ -15,12 +15,14 @@ const pages = ["Pokemon", "Abilities", "Moves", "Items"];
 
 export function Header() {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-    const pathname = usePathname();
+    const pathname = usePathname().split('/');
+    const origin = pathname.at(1);
     const router = useRouter();
 
     const search = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {
-            router.push(`${pathname}/${event.currentTarget.value}`)
+                router.replace(`/${origin}/${event.currentTarget.value}`);
+                event.currentTarget.value = '';
         }
     }
 

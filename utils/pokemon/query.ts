@@ -2,7 +2,7 @@ import { gql } from 'graphql-tag';
 
 
 export const getPokemon = (pokemon: string) => gql(`{
-    pokemon_v2_pokemon(where: {name: {_eq: "charizard"}}) {
+    pokemon_v2_pokemon(where: {name: {_eq: "${pokemon}"}}) {
       height
       weight
       name
@@ -66,7 +66,7 @@ export const getPokemon = (pokemon: string) => gql(`{
         }
       }
     }
-    pokemon_v2_pokemonspecies(where: {name: {_eq: "charizard"}}) {
+    pokemon_v2_pokemonspecies(where: {name: {_eq: "${pokemon}"}}) {
       id
       name
       capture_rate
@@ -85,103 +85,127 @@ export interface PokemonRoot {
 }
 
 export interface Data {
-    pokemon_v2_pokemon: PokemonV2Pokemon[]
-    pokemon_v2_pokemonspecies: PokemonV2Pokemonspecy2[]
+  pokemon_v2_pokemon: PokemonV2Pokemon[]
+  pokemon_v2_pokemonspecies: PokemonV2Pokemonspecy2[]
 }
 
 export interface PokemonV2Pokemon {
-    height: number
-    weight: number
-    name: string
-    pokemon_v2_pokemonabilities: PokemonV2Pokemonability[]
-    pokemon_v2_pokemonstats: PokemonV2Pokemonstat[]
-    base_experience: number
-    pokemon_v2_pokemonspecy: PokemonV2Pokemonspecy
+  height: number
+  weight: number
+  name: string
+  pokemon_v2_pokemonabilities: PokemonV2Pokemonability[]
+  pokemon_v2_pokemonsprites: PokemonV2Pokemonsprite[]
+  pokemon_v2_pokemonstats: PokemonV2Pokemonstat[]
+  base_experience: number
+  pokemon_v2_pokemonspecy: PokemonV2Pokemonspecy
+  pokemon_v2_pokemontypes: PokemonV2Pokemontype[]
 }
 
 export interface PokemonV2Pokemonability {
-    is_hidden: boolean
-    pokemon_v2_ability: PokemonV2Ability
+  is_hidden: boolean
+  pokemon_v2_ability: PokemonV2Ability
 }
 
 export interface PokemonV2Ability {
-    name: string
-    pokemon_v2_abilityeffecttexts: PokemonV2Abilityeffecttext[]
+  name: string
+  pokemon_v2_abilityeffecttexts: PokemonV2Abilityeffecttext[]
 }
 
 export interface PokemonV2Abilityeffecttext {
-    short_effect: string
-    effect: string
+  short_effect: string
+  effect: string
+}
+
+export interface PokemonV2Pokemonsprite {
+  sprites: string
 }
 
 export interface PokemonV2Pokemonstat {
-    base_stat: number
-    pokemon_v2_stat: PokemonV2Stat
+  base_stat: number
+  pokemon_v2_stat: PokemonV2Stat
 }
 
 export interface PokemonV2Stat {
-    id: number
-    name: string
+  id: number
+  name: string
 }
 
 export interface PokemonV2Pokemonspecy {
-    base_happiness: number
-    capture_rate: number
-    is_legendary: boolean
-    is_mythical: boolean
-    hatch_counter: number
-    pokemon_v2_pokemondexnumbers: PokemonV2Pokemondexnumber[]
-    generation_id: number
-    pokemon_v2_pokemoncolor: PokemonV2Pokemoncolor
-    pokemon_v2_pokemonegggroups: PokemonV2Pokemonegggroup[]
-    pokemon_v2_growthrate: PokemonV2Growthrate
-    pokemon_v2_pokemonspeciesnames: PokemonV2Pokemonspeciesname[]
+  base_happiness: number
+  capture_rate: number
+  is_legendary: boolean
+  is_mythical: boolean
+  hatch_counter: number
+  pokemon_v2_pokemondexnumbers: PokemonV2Pokemondexnumber[]
+  generation_id: number
+  pokemon_v2_pokemoncolor: PokemonV2Pokemoncolor
+  pokemon_v2_pokemonegggroups: PokemonV2Pokemonegggroup[]
+  pokemon_v2_growthrate: PokemonV2Growthrate
+  pokemon_v2_pokemonspeciesnames: PokemonV2Pokemonspeciesname[]
 }
 
 export interface PokemonV2Pokemondexnumber {
-    pokemon_v2_pokedex: PokemonV2Pokedex
-    pokedex_number: number
+  pokemon_v2_pokedex: PokemonV2Pokedex
+  pokedex_number: number
 }
 
 export interface PokemonV2Pokedex {
-    name: string
+  name: string
 }
 
 export interface PokemonV2Pokemoncolor {
-    name: string
+  name: string
 }
 
 export interface PokemonV2Pokemonegggroup {
-    pokemon_v2_egggroup: PokemonV2Egggroup
+  pokemon_v2_egggroup: PokemonV2Egggroup
 }
 
 export interface PokemonV2Egggroup {
-    name: string
+  name: string
 }
 
 export interface PokemonV2Growthrate {
-    name: string
+  name: string
 }
 
 export interface PokemonV2Pokemonspeciesname {
-    name: string
-    genus: string
-    id: number
+  name: string
+  genus: string
+  id: number
+}
+
+export interface PokemonV2Pokemontype {
+  pokemon_v2_type: PokemonV2Type
+}
+
+export interface PokemonV2Type {
+  name: string
+  pokemonV2TypeefficaciesByTargetTypeId: PokemonV2TypeefficaciesByTargetTypeId[]
+}
+
+export interface PokemonV2TypeefficaciesByTargetTypeId {
+  damage_factor: number
+  pokemon_v2_type: PokemonV2Type2
+}
+
+export interface PokemonV2Type2 {
+  name: string
 }
 
 export interface PokemonV2Pokemonspecy2 {
-    id: number
-    name: string
-    capture_rate: number
-    base_happiness: number
-    hatch_counter: number
-    pokemon_v2_evolutionchain: PokemonV2Evolutionchain
+  id: number
+  name: string
+  capture_rate: number
+  base_happiness: number
+  hatch_counter: number
+  pokemon_v2_evolutionchain: PokemonV2Evolutionchain
 }
 
 export interface PokemonV2Evolutionchain {
-    pokemon_v2_pokemonspecies: PokemonV2Pokemonspecy3[]
+  pokemon_v2_pokemonspecies: PokemonV2Pokemonspecy3[]
 }
 
 export interface PokemonV2Pokemonspecy3 {
-    name: string
+  name: string
 }

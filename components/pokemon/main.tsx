@@ -15,49 +15,37 @@ export function PokemonDisplay({ pokemon }: { pokemon: Pokemon }) {
 
     return (
         <Grid container spacing={{ xs: 1, md: 1, }} columns={{ xs: 4, md: 9 }} className="mt-auto">
-            <Grid item xs={4} md={3} className="flex justify-center items-center bg-green-200" style={{
-                paddingTop: '1%',
-                flexDirection: 'column',
-                minHeight: '27rem',
-                maxHeight: '27rem'
-            }}>
-                {/* TODO: stick to right */}
+            <Grid item xs={4} md={3} className="flex justify-center items-center bg-green-200 flex-col">
                 <div className="flex flex-row p-2" style={{ width: '80%', height: '80%', justifyContent: 'flex-end' }}>
                     <span onClick={() => setShowShiny(!showShiny)} style={{ cursor: 'pointer' }}>
                         {showShiny ? <StarNo /> : <Star />}
                     </span>
                 </div>
                 <Image
-                style={{
-                    maxWidth: 150
-                }}
+                    priority={true}
+                    className="pb-20"
                     src={showSprite()}
                     alt={pokemon.pokemon.name}
-                    height={400}
+                    height={200}
                     width={200}
                 />
-                {/* TODO: decrease margin top of image and everything for mobile */}
-                <div className="bg-blue-700 p-4 rounded-md flex text-white mt-10 mb-12">
+                <div className="bg-blue-700 p-4 rounded-md flex text-white">
                     <Typography variant="h5" component="h3">
                         {pokemon.pokemon.name[0].toUpperCase() + pokemon.pokemon.name.substring(1)}
                     </Typography>
                 </div>
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'row'
-                }}>
-                    {/* TODO: recalculate using the better data */}
-                    {/* {pokemon.types.map((t) => <img
-                        key={t.name}
-                        src={`/${t.name.toLowerCase()}.png`}
-                        alt={t.name}
+                <div className="flex flex-row m-5 mb-14">
+                    {pokemon.pokemon.pokemon_v2_pokemontypes.map((t) => <Image
+                        key={t.pokemon_v2_type.name}
+                        src={`/${t.pokemon_v2_type.name.toLowerCase()}.png`}
+                        alt={t.pokemon_v2_type.name}
                         height={45}
                         width={45}
                         style={{
-                            marginBottom: '2rem',
-                            maxHeight: '45px'
+                            maxWidth: '45px'
                         }}
-                    />)} */}
+                        className="m-1"
+                    />)}
                 </div>
             </Grid>
             <Grid item xs={4} md={6}>
