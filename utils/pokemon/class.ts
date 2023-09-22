@@ -1,8 +1,8 @@
-import { PokemonRoot } from "./query";
+import { PokemonRoot, PokemonV2Pokemon, PokemonV2Pokemonspecy2 } from "./query";
 
 export class Pokemon {
-    species: import("c:/Users/oriel/projects/frontends-private/project1/utils/pokemon/query").PokemonV2Pokemonspecy2[];
-    pokemon: import("c:/Users/oriel/projects/frontends-private/project1/utils/pokemon/query").PokemonV2Pokemon;
+    species: PokemonV2Pokemonspecy2[];
+    pokemon: PokemonV2Pokemon;
     sprite: string;
     shinySprite: string;
     constructor(data: PokemonRoot['data']) {
