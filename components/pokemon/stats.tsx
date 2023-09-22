@@ -23,14 +23,14 @@ export function StatsTable({ pokemon }: { pokemon: Pokemon }) {
                 {/* HEIGHT */}
                 <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                   <TableCell component="th" scope="row"><b>Height</b></TableCell>
-                  <TableCell align="left">{pokemon.pokemon.height}m ({convertToFt(pokemon.pokemon.height)})</TableCell>
+                  <TableCell align="left">{pokemon.pokemon.height / 10}m ({convertToFt(pokemon.pokemon.height / 10)})</TableCell>
                 </TableRow>
   
   
                 {/* WEIGHT */}
                 <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                   <TableCell component="th" scope="row"><b>Weight</b></TableCell>
-                  <TableCell align="left">{pokemon.pokemon.weight}kg ({convertToLb(pokemon.pokemon.weight)}lb)</TableCell>
+                  <TableCell align="left">{pokemon.pokemon.weight / 10}kg ({convertToLb(pokemon.pokemon.weight / 10)}lb)</TableCell>
                 </TableRow>
   
                 {/* HP */}
