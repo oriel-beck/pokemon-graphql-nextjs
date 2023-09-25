@@ -1,5 +1,21 @@
-import { TableCell, TableRow } from "@mui/material";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
+import { Pokemon } from "@utils/pokemon/class";
+import { calculateTypeEffectiveness } from "@utils/pokemon/util";
 import Image from "next/image";
+
+export function Effectiveness({ pokemon }: { pokemon: Pokemon }) {
+    const defenseEffectiveness = calculateTypeEffectiveness(pokemon.pokemon.pokemon_v2_pokemontypes);
+    return (
+        <TableContainer component={Paper} className="mb-16" >
+            <Table aria-label="pokedex stats">
+                <TableBody>
+                    {/* TODO: recalculate using the better stats */}
+                    {mapEffectivenessToTableCells(defenseEffectiveness)}
+                </TableBody>
+            </Table>
+        </TableContainer>
+    );
+}
 
 export function mapEffectivenessToTableCells(types: Record<string, number>) {
     let num = 0;
@@ -14,8 +30,11 @@ export function mapEffectivenessToTableCells(types: Record<string, number>) {
                     <Image
                         src={`/${key}.png`}
                         alt={key}
-                        height={45}
-                        width={45}
+                        height={35}
+                        width={35}
+                        style={{
+                            minWidth: 35
+                        }}
                     />
                 </TableCell>
             )

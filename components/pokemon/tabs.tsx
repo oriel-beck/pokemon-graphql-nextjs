@@ -13,7 +13,7 @@ export function PokemonTabs({ pokemon }: { pokemon: Pokemon }) {
     return (
         <>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor="primary" indicatorColor="secondary">
+                <Tabs value={value} onChange={handleChange} aria-label="Pokemon information tabs" textColor="primary" indicatorColor="secondary">
                     <Tab label="Stats" {...a11yProps(0)} className="placeholder-sky-50" />
                     <Tab label="Abilities" {...a11yProps(1)} />
                     <Tab label="Move-sets" {...a11yProps(2)} />
