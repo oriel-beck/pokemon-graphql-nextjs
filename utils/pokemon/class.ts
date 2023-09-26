@@ -6,10 +6,18 @@ export class Pokemon {
     sprite: string;
     shinySprite: string;
     constructor(data: PokemonRoot['data']) {
-        console.log(data)
         this.pokemon = data.pokemon_v2_pokemon[0];
         this.species = data.pokemon_v2_pokemonspecies;
         this.sprite = `http://play.pokemonshowdown.com/sprites/dex/${this.pokemon.name.toLowerCase()}.png`;
         this.shinySprite = `https://play.pokemonshowdown.com/sprites/dex-shiny/${this.pokemon.name.toLowerCase()}.png`;
+    }
+
+    toJSON() {
+        return {
+            pokemon: this.pokemon,
+            species: this.species,
+            sprite: this.sprite,
+            shinySprite: this.shinySprite
+        }
     }
 }

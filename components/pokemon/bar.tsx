@@ -7,9 +7,11 @@ export function LinearProgressWithLabel(props: LinearProgressProps & { value: nu
                 <LinearProgress variant="determinate" {...props} />
             </Box>
             <Box sx={{ minWidth: 35 }}>
-                <Typography variant="body2" color="text.secondary">{`${Math.round(
+                {/* <Typography variant="body2" color="text.secondary"> */}
+                    {`${Math.round(
                     props.value,
-                )}%`}</Typography>
+                )}%`}
+                {/* </Typography> */}
             </Box>
         </Box>
     );

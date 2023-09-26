@@ -21,8 +21,8 @@ export function Header() {
 
     const search = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {
-                router.replace(`/${origin}/${event.currentTarget.value}`);
-                event.currentTarget.value = '';
+            router.replace(`/${origin}/${event.currentTarget.value}`);
+            event.currentTarget.value = '';
         }
     }
 
@@ -76,7 +76,8 @@ export function Header() {
                         >
                             {pages.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
+                                    {/* TODO: typography styles */}
+                                    {page}
                                 </MenuItem>
                             ))}
                         </Menu>
