@@ -14,9 +14,6 @@ export const metadata: Metadata = {
   title: "Pokemon wiki",
   description: "Search pokemons, abilities, moves and items. All of your pokemon related information in one place!",
   openGraph: {
-    images: [
-      "https://i2.milimaj.com/i/milliyet/75/869x477/5ef1c7cd55427e1ad86ae789.jpg"
-    ],
     url: "https://pokemon-graphql-nextjs.vercel.app"
   }
 }
