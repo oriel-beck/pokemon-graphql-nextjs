@@ -2,15 +2,28 @@ import { PokemonRoot, getPokemon } from "@utils/pokemon/query";
 import { Pokemon } from "@utils/pokemon/class";
 import { client } from "@app/client";
 import { PokemonTabs } from "@components/pokemon/main";
-import { Metadata } from "next";
+import { Metadata, ResolvingMetadata } from "next";
 import { convertToFt, convertToLb } from "@utils/util";
 
 export async function generateMetadata(
-    { params }: { params: { name: string } }
+    { params }: { params: { name: string } },
+    parent: ResolvingMetadata
 ): Promise<Metadata> {
     const pokemon = params.name;
-    // TODO: handle not found metadata
-    const res = await client.query<PokemonRoot>({ query: getPokemon(pokemon) });
+
+    const res = await client.query<PokemonRoot>({ query: getPokemon(pokemon) }).catch(() => null);
+    if (!res) {
+        const graph = (await parent).openGraph;
+        return {
+            title: (await parent).title,
+            description: (await parent).description,
+            openGraph: {
+                images: graph?.images || [],
+                url: graph?.url!
+            }
+        }
+    }
+    
     const pokedata = res.data as unknown as PokemonRoot['data'];
     const data = new Pokemon(pokedata);
 
