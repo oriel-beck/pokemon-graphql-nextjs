@@ -5,7 +5,7 @@ import { convertToFt, convertToLb } from "@utils/util";
 import type { Pokemon } from "@utils/pokemon/class";
 import Link from "next/link";
 
-export function StatsTable({ pokemon }: { pokemon: ReturnType<Pokemon['toJSON']> }) {
+export function StatsPokedexDataTable({ pokemon }: { pokemon: ReturnType<Pokemon['toJSON']> }) {
   return (
     <Box>
       <Toolbar>

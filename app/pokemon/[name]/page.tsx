@@ -1,7 +1,7 @@
 import { PokemonRoot, getPokemon } from "@utils/pokemon/query";
 import { Pokemon } from "@utils/pokemon/class";
 import { client } from "@app/client";
-import { PokemonTabs } from "@components/pokemon/main";
+import { MainStats } from "@components/pokemon/stats/main";
 import { Metadata, ResolvingMetadata } from "next";
 import { convertToFt, convertToLb } from "@utils/util";
 
@@ -42,5 +42,5 @@ export default async function Page({ params }: { params: { name: string } }) {
     const pokedata = res.data as unknown as PokemonRoot['data'];
 
     // TODO: add tabs/links for pokemon variants (i.e: mega, charizard-y/x, etc)
-    return <PokemonTabs pokemon={new Pokemon(pokedata).toJSON()} />
+    return <MainStats pokemon={new Pokemon(pokedata).toJSON()} />
 }

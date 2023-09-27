@@ -2,7 +2,7 @@ import { Box, Divider, Table, TableBody, TableCell, TableContainer, TableRow, To
 import { Pokemon } from "@utils/pokemon/class";
 import { toTitleCase } from "@utils/util";
 
-export function TrainingTable({ pokemon }: { pokemon: ReturnType<Pokemon['toJSON']> }) {
+export function StatsTrainingTable({ pokemon }: { pokemon: ReturnType<Pokemon['toJSON']> }) {
     return (
         <Box>
             <Toolbar>

@@ -3,7 +3,7 @@ import { Pokemon } from "@utils/pokemon/class";
 import { calculateTypeEffectiveness } from "@utils/pokemon/util";
 import Image from "next/image";
 
-export function Effectiveness({ pokemon }: { pokemon: ReturnType<Pokemon['toJSON']> }) {
+export function StatsEffectiveness({ pokemon }: { pokemon: ReturnType<Pokemon['toJSON']> }) {
     const defenseEffectiveness = calculateTypeEffectiveness(pokemon.pokemon.pokemon_v2_pokemontypes);
     return (
         <Box>

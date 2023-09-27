@@ -1,16 +1,16 @@
 "use client"
 
-import { Box, Divider, Grid, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Divider, Grid, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
-import { StatsTable } from "./stats";
+import { StatsPokedexDataTable } from "./stats";
 import type { Pokemon } from "@utils/pokemon/class";
-import { Effectiveness } from "./effectiveness";
+import { StatsEffectiveness } from "./effectiveness";
 import { StatsBars } from "./stats-bars";
-import { Sprite } from "./sprite-box";
-import { TrainingTable } from "./training";
-import { BreedingTable } from "./breeding";
+import { StatsSprite } from "./sprite-box";
+import { StatsTrainingTable } from "./training";
+import { StatsBreedingTable } from "./breeding";
 
-export function PokemonTabs({ pokemon }: { pokemon: ReturnType<Pokemon['toJSON']> }) {
+export function MainStats({ pokemon }: { pokemon: ReturnType<Pokemon['toJSON']> }) {
     const [value, setValue] = useState(0);
 
     const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
@@ -30,15 +30,15 @@ export function PokemonTabs({ pokemon }: { pokemon: ReturnType<Pokemon['toJSON']
             <CustomTabPanel value={value} index={0}>
                 <Grid container spacing={{ xs: 1, md: 1, }} columns={{ xs: 4, md: 10 }} className="mt-auto" style={{ marginBottom: '65px' }}>
                     <Grid item xs={4} md={3} className="flex items-center flex-col pb-4">
-                        <Sprite pokemon={pokemon} />
+                        <StatsSprite pokemon={pokemon} />
                     </Grid>
                     <Grid item xs={4} md={3.5}>
-                        <StatsTable pokemon={pokemon} />
+                        <StatsPokedexDataTable pokemon={pokemon} />
                     </Grid>
                     <Grid item xs={4} md={3}>
-                        <TrainingTable pokemon={pokemon} />
+                        <StatsTrainingTable pokemon={pokemon} />
                         <Divider />
-                        <BreedingTable pokemon={pokemon} />
+                        <StatsBreedingTable pokemon={pokemon} />
                     </Grid>
                     <Grid item xs={4} md={4.5}>
                         <StatsBars pokemon={pokemon} />
@@ -46,7 +46,7 @@ export function PokemonTabs({ pokemon }: { pokemon: ReturnType<Pokemon['toJSON']
                     {/* Divider */}
                     <Grid item xs={0} md={0.5}></Grid>
                     <Grid item xs={4} md={5}>
-                        <Effectiveness pokemon={pokemon} />
+                        <StatsEffectiveness pokemon={pokemon} />
                     </Grid>
                 </Grid>
             </CustomTabPanel>

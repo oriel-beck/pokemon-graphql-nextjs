@@ -5,7 +5,7 @@ import { Pokemon } from "@utils/pokemon/class";
 import { useState } from "react";
 import Image from "next/image";
 
-export function Sprite({ pokemon }: { pokemon: ReturnType<Pokemon['toJSON']> }) {
+export function StatsSprite({ pokemon }: { pokemon: ReturnType<Pokemon['toJSON']> }) {
     const [showShiny, setShowShiny] = useState(false);
 
     function showSprite() {

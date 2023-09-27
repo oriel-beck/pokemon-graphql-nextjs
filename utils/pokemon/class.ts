@@ -8,8 +8,8 @@ export class Pokemon {
     constructor(data: PokemonRoot['data']) {
         this.pokemon = data.pokemon_v2_pokemon[0];
         this.species = data.pokemon_v2_pokemonspecies;
-        this.sprite = `http://play.pokemonshowdown.com/sprites/dex/${this.pokemon.name.toLowerCase()}.png`;
-        this.shinySprite = `https://play.pokemonshowdown.com/sprites/dex-shiny/${this.pokemon.name.toLowerCase()}.png`;
+        this.sprite = `http://play.pokemonshowdown.com/sprites/ani/${this.pokemon.name.toLowerCase()}.gif`;
+        this.shinySprite = `https://play.pokemonshowdown.com/sprites/ani-shiny/${this.pokemon.name.toLowerCase()}.gif`;
     }
 
     toJSON() {

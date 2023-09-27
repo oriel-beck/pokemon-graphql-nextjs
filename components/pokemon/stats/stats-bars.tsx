@@ -1,7 +1,7 @@
 "use client"
 import { Box, Divider, Table, TableBody, TableCell, TableContainer, TableRow, Toolbar, Typography } from "@mui/material";
 import { precentageBaseStat } from "@utils/pokemon/util";
-import { LinearProgressWithLabel } from "./bar";
+import { LinearProgressWithLabel } from "../../bar/bar";
 import { Pokemon } from "@utils/pokemon/class";
 
 export function StatsBars({ pokemon }: { pokemon: ReturnType<Pokemon['toJSON']> }) {
