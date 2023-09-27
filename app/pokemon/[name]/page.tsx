@@ -16,7 +16,7 @@ export async function generateMetadata(
 
     return {
         title: "Pokemon wiki",
-        description: `- National Pokedex entry: ${data.pokemon.pokemon_v2_pokemonspecy.pokemon_v2_pokemondexnumbers[0].pokedex_number}\n- Species: ${data.pokemon.pokemon_v2_pokemonspecy.pokemon_v2_pokemonspeciesnames[0].genus}\n- Height: ${data.pokemon.height / 10}m (${convertToFt(data.pokemon.height / 10)})\n- Weight: ${data.pokemon.weight / 10}kg (${convertToLb(data.pokemon.weight / 10)}lb)\n- Abilities: \n${data.pokemon.pokemon_v2_pokemonabilities.map((ability) => `    - ${ability.pokemon_v2_ability.name}`).join('\n')}`,
+        description: `- National Pokedex entry: ${data.pokemon.pokemon_v2_pokemonspecy.pokemon_v2_pokemondexnumbers[0].pokedex_number}\n- Species: ${data.pokemon.pokemon_v2_pokemonspecy.pokemon_v2_pokemonspeciesnames[0].genus}\n- Height: ${data.pokemon.height / 10}m (${convertToFt(data.pokemon.height / 10)})\n- Weight: ${data.pokemon.weight / 10}kg (${convertToLb(data.pokemon.weight / 10)}lb)\n\nAbilities: \n${data.pokemon.pokemon_v2_pokemonabilities.map((ability) => `- ${ability.pokemon_v2_ability.name}`).join('\n')}`,
         openGraph: {
             images: [data.sprite],
         },
