@@ -7,6 +7,8 @@ import type { Pokemon } from "@utils/pokemon/class";
 import { Effectiveness } from "./effectiveness";
 import { StatsBars } from "./stats-bars";
 import { Sprite } from "./sprite-box";
+import { TrainingTable } from "./training";
+import { BreedingTable } from "./breeding";
 
 export function PokemonTabs({ pokemon }: { pokemon: ReturnType<Pokemon['toJSON']> }) {
     const [value, setValue] = useState(0);
@@ -30,13 +32,13 @@ export function PokemonTabs({ pokemon }: { pokemon: ReturnType<Pokemon['toJSON']
                     <Grid item xs={4} md={3} className="flex items-center flex-col pb-4">
                         <Sprite pokemon={pokemon} />
                     </Grid>
-                    {/* Divider */}
-                    <Grid item xs={0} md={0.5}></Grid>
                     <Grid item xs={4} md={3.5}>
                         <StatsTable pokemon={pokemon} />
                     </Grid>
                     <Grid item xs={4} md={3}>
-                        {/* Breeding */}
+                        <TrainingTable pokemon={pokemon} />
+                        <Divider />
+                        <BreedingTable pokemon={pokemon} />
                     </Grid>
                     <Grid item xs={4} md={4.5}>
                         <StatsBars pokemon={pokemon} />

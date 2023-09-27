@@ -19,7 +19,7 @@ export function StatsBars({ pokemon }: { pokemon: ReturnType<Pokemon['toJSON']> 
             </Toolbar>
             <Divider/>
             <TableContainer >
-                <Table aria-label="pokedex stats">
+                <Table aria-label="base stats">
                     <TableBody>
                         {/* HP */}
                         < TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }

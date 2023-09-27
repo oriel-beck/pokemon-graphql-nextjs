@@ -21,7 +21,6 @@ export function Sprite({ pokemon }: { pokemon: ReturnType<Pokemon['toJSON']> }) 
             </div>
             <Image
                 priority={true}
-                className=""
                 src={showSprite()}
                 alt={pokemon.pokemon.name}
                 height={200}

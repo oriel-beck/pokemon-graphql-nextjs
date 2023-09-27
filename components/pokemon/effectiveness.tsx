@@ -19,7 +19,7 @@ export function Effectiveness({ pokemon }: { pokemon: ReturnType<Pokemon['toJSON
             </Toolbar>
             <Divider/>
             <TableContainer>
-                <Table aria-label="pokedex stats">
+                <Table aria-label={`effectiveness of types against ${pokemon.pokemon.name}`}>
                     <TableBody>
                         {/* TODO: add hover text to images (and icons) */}
                         {mapEffectivenessToTableCells(defenseEffectiveness)}
