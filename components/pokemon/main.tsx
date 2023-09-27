@@ -2,13 +2,14 @@
 
 import { Box, Divider, Grid, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
-import { StatsPokedexDataTable } from "./stats";
+import { StatsPokedexDataTable } from "./stats/stats";
 import type { Pokemon } from "@utils/pokemon/class";
-import { StatsEffectiveness } from "./effectiveness";
-import { StatsBars } from "./stats-bars";
-import { StatsSprite } from "./sprite-box";
-import { StatsTrainingTable } from "./training";
-import { StatsBreedingTable } from "./breeding";
+import { StatsEffectiveness } from "./stats/effectiveness";
+import { StatsBars } from "./stats/stats-bars";
+import { StatsSprite } from "./stats/sprite-box";
+import { StatsTrainingTable } from "./stats/training";
+import { StatsBreedingTable } from "./stats/breeding";
+import { AbilitiesAbilityTable } from "./abilities/abilities";
 
 export function MainStats({ pokemon }: { pokemon: ReturnType<Pokemon['toJSON']> }) {
     const [value, setValue] = useState(0);
@@ -52,7 +53,7 @@ export function MainStats({ pokemon }: { pokemon: ReturnType<Pokemon['toJSON']> 
             </CustomTabPanel>
             {/* Abilities */}
             <CustomTabPanel value={value} index={1}>
-                Abilities
+                <AbilitiesAbilityTable abilities={pokemon.pokemon.pokemon_v2_pokemonabilities} />
             </CustomTabPanel>
             {/* Move-sets */}
             <CustomTabPanel value={value} index={2}>

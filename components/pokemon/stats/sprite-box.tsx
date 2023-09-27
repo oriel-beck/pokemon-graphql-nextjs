@@ -20,11 +20,15 @@ export function StatsSprite({ pokemon }: { pokemon: ReturnType<Pokemon['toJSON']
                 </span>
             </div>
             <Image
+                className="m-4"
                 priority={true}
                 src={showSprite()}
                 alt={pokemon.pokemon.name}
                 height={200}
                 width={200}
+                style={{
+                    maxWidth: 200
+                }}
             />
             <div className="flex flex-row">
                 {pokemon.pokemon.pokemon_v2_pokemontypes.map((t) => <Image

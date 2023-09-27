@@ -1,7 +1,7 @@
 import { PokemonRoot, getPokemon } from "@utils/pokemon/query";
 import { Pokemon } from "@utils/pokemon/class";
 import { client } from "@app/client";
-import { MainStats } from "@components/pokemon/stats/main";
+import { MainStats } from "@components/pokemon/main";
 import { Metadata, ResolvingMetadata } from "next";
 import { convertToFt, convertToLb } from "@utils/util";
 

@@ -4,6 +4,7 @@ import { Box, Divider, Table, TableBody, TableCell, TableContainer, TableRow, To
 import { convertToFt, convertToLb } from "@utils/util";
 import type { Pokemon } from "@utils/pokemon/class";
 import Link from "next/link";
+import { StatsAbility } from "./ability-popover";
 
 export function StatsPokedexDataTable({ pokemon }: { pokemon: ReturnType<Pokemon['toJSON']> }) {
   return (
@@ -18,7 +19,7 @@ export function StatsPokedexDataTable({ pokemon }: { pokemon: ReturnType<Pokemon
           Pokédex data
         </Typography>
       </Toolbar>
-      <Divider/>
+      <Divider />
       <TableContainer>
         <Table aria-label="pokedex data">
           <TableBody>
@@ -49,7 +50,7 @@ export function StatsPokedexDataTable({ pokemon }: { pokemon: ReturnType<Pokemon
             {/* Abilities */}
             <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell component="th" scope="row" className="text-gray-500">Abilities</TableCell>
-              <TableCell align="left"><ul>{pokemon.pokemon.pokemon_v2_pokemonabilities.map((ability) => (<li key={ability.pokemon_v2_ability.name}><Link href={`/abilities/${ability.pokemon_v2_ability.name}`} replace={true}>{ability.pokemon_v2_ability.name} {ability.is_hidden ? <span>(hidden)</span> : <></>}</Link></li>))}</ul></TableCell>
+              <TableCell align="left"><ul>{pokemon.pokemon.pokemon_v2_pokemonabilities.map((ability, i) => (<StatsAbility key={i} ability={ability} />))}</ul></TableCell>
             </TableRow>
           </TableBody>
         </Table>
