@@ -11,10 +11,11 @@ import { Footer } from "@components/footer/footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://pokemon-graphql-nextjs.vercel.app'),
   title: "Pokemon wiki",
   description: "Search pokemons, abilities, moves and items. All of your pokemon related information in one place!",
   openGraph: {
-    url: "https://pokemon-graphql-nextjs.vercel.app"
+    url: "/"
   }
 }
 
